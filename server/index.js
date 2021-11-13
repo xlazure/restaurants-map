@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
+require("dotenv").config();
+
 const RestaurantsModel = require("./models/Restaurants");
 const userModel = require("./models/User");
 
@@ -10,8 +12,11 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
+const login = process.env.MONGO_DB_LOGIN;
+const password = process.env.MONGO_DB_PASSWORD;
+
 mongoose.connect(
-  "mongodb+srv://dbAdmin:UfjFjCmaGJA@cluster0.pktdq.mongodb.net/sample_restaurants?retryWrites=true&w=majority"
+  `httpmongodb+srv://${login}:${password}@cluster0.pktdq.mongodb.net/sample_restaurants?retryWrites=true&w=majority`
 );
 
 app.get("/restaurants", (req, res) => {
